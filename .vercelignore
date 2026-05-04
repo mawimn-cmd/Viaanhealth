@@ -1,0 +1,16 @@
+.git
+.DS_Store
+.claude/
+Bio package/
+Bio package.zip
+*.zip
+biomarker-reference.csv
+biomarker-reference-notes.md
+download-assets.html
+linkedin-assets.html
+linkedin-thumbnail.html
+viaan-app-prototype.html
+viaan-app-v2.html
+viaan-brand-assets.html
+viaan-coach-dashboard.html
+viaan-health-linkedin.svg

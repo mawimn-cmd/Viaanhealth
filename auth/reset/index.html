@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password reset | Viaan Health</title>
+  <meta name="description" content="Password reset shell for Viaan Health.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/site.js" defer></script>
+</head>
+<body>
+  <!-- F003 owns recovery token handling, password validation, and supabase.auth.updateUser({ password }). -->
+  <!-- F131 root-domain decision: v1 public/auth routes use https://viaanhealth.com; app.viaanhealth.com is deferred. -->
+  <header class="site-header" data-route="/auth/reset">
+    <a class="brand" href="/" aria-label="Viaan Health home">
+      <span class="brand-mark">V</span>
+      <span>Viaan Health</span>
+    </a>
+    <nav class="top-nav" aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/sign-in">Sign in</a>
+      <a href="/privacy">Privacy</a>
+    </nav>
+  </header>
+
+  <main class="shell-page">
+    <section class="auth-card" aria-labelledby="reset-title">
+      <p class="eyebrow">Account recovery</p>
+      <h1 id="reset-title">Password reset</h1>
+      <div class="auth-copy">
+        <p lang="en">Password reset</p>
+        <p lang="de">Passwort zur&uuml;cksetzen</p>
+      </div>
+      <p class="quiet-note" lang="en">The recovery token flow and secure password form will be connected by the password reset feature.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Viaan Health.</p>
+    <nav aria-label="Legal navigation">
+      <a href="/imprint">Imprint</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+    </nav>
+  </footer>
+</body>
+</html>

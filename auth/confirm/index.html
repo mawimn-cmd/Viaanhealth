@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirm email | Viaan Health</title>
+  <meta name="description" content="Email confirmation shell for Viaan Health.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/site.js" defer></script>
+</head>
+<body>
+  <!-- Preview shell only. Do not route production verification traffic here until Supabase Auth handling is wired. -->
+  <!-- F131 root-domain decision: v1 public/auth routes use https://viaanhealth.com; app.viaanhealth.com is deferred. -->
+  <header class="site-header" data-route="/auth/confirm">
+    <a class="brand" href="/" aria-label="Viaan Health home">
+      <span class="brand-mark">V</span>
+      <span>Viaan Health</span>
+    </a>
+    <nav class="top-nav" aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/sign-in">Sign in</a>
+      <a href="/privacy">Privacy</a>
+    </nav>
+  </header>
+
+  <main class="shell-page">
+    <section class="auth-card" aria-labelledby="confirm-title">
+      <p class="eyebrow">Email confirmation</p>
+      <h1 id="confirm-title">Email verification pending</h1>
+      <div class="auth-copy">
+        <p lang="en">This preview page does not process verification links yet. Do not send production signup traffic here until the verified Viaan Supabase Auth project is connected.</p>
+        <p lang="de">Diese Vorschauseite verarbeitet noch keine Best&auml;tigungslinks. Leite keine produktiven Registrierungen hierher, bevor das verifizierte Viaan Supabase Auth Projekt verbunden ist.</p>
+      </div>
+      <p class="quiet-note" lang="en">F131 remains incomplete for production cutover until this route consumes the Supabase verification result and shows real success or error states.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Viaan Health.</p>
+    <nav aria-label="Legal navigation">
+      <a href="/imprint">Imprint</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+    </nav>
+  </footer>
+</body>
+</html>

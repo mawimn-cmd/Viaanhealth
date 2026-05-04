@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Viaan Health</title>
+  <meta name="description" content="Viaan Health combines biomarker testing, wearable context, and human nutritionist coaching for a closed beta in Germany.">
+  <meta property="og:title" content="Viaan Health">
+  <meta property="og:description" content="Biomarker testing, wearable context, and human nutritionist coaching for a closed beta in Germany.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/site.js" defer></script>
+</head>
+<body>
+  <!-- F131 root-domain decision: v1 public/auth routes use https://viaanhealth.com; app.viaanhealth.com is deferred. -->
+  <header class="site-header" data-route="/">
+    <a class="brand" href="/" aria-label="Viaan Health home">
+      <span class="brand-mark">V</span>
+      <span>Viaan Health</span>
+    </a>
+    <nav class="top-nav" aria-label="Main navigation">
+      <a href="/sign-in">Sign in</a>
+      <a href="/privacy">Privacy</a>
+      <a class="button button-small" href="mailto:hello@viaanhealth.com">Request access</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero-section">
+      <div class="hero-copy">
+        <p class="eyebrow">Closed beta in Germany, August 2026</p>
+        <h1>Viaan Health</h1>
+        <p class="hero-lede">A premium longevity entry surface for people who want biomarker testing, wearable context, and nutritionist coaching without turning wellness data into a medical record.</p>
+        <div class="hero-actions" aria-label="Primary actions">
+          <a class="button" href="/sign-in">Member sign in</a>
+          <a class="button button-secondary" href="#entry-surface">View v1 surface</a>
+        </div>
+      </div>
+
+      <div class="product-visual" aria-label="Viaan v1 service flow preview">
+        <div class="visual-topline">
+          <span>V1 member journey</span>
+          <span>Root domain</span>
+        </div>
+        <div class="journey-row">
+          <span class="step-index">01</span>
+          <div>
+            <h2>At-home DBS kit</h2>
+            <p>DoctorBox lab supply with manual lab ingestion for the beta.</p>
+          </div>
+          <span class="state-pill">Planned</span>
+        </div>
+        <div class="journey-row">
+          <span class="step-index">02</span>
+          <div>
+            <h2>Wearable context</h2>
+            <p>Terra connection for Apple HealthKit, Android HealthConnect, and supported providers.</p>
+          </div>
+          <span class="state-pill">V1</span>
+        </div>
+        <div class="journey-row">
+          <span class="step-index">03</span>
+          <div>
+            <h2>Human coaching</h2>
+            <p>Nutritionist guidance in German and English for invited pilot members.</p>
+          </div>
+          <span class="state-pill">Beta</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band" id="entry-surface">
+      <div class="section-heading">
+        <p class="eyebrow">F131 public surface</p>
+        <h2>Marketing, auth, and legal route shells live on viaanhealth.com.</h2>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <h3>Marketing homepage</h3>
+          <p>EN-primary positioning for the public entry point, with no scoring prototype, payment form, analytics scripts, or PHI inputs.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Auth entry</h3>
+          <p>Bilingual sign-in and callback shells prepare the later Supabase confirmation and reset flows without service-role keys.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Legal scaffolds</h3>
+          <p>German legal route placeholders are visible and explicitly block production cutover until F120/F121 supply real text.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="route-strip" aria-labelledby="route-strip-title">
+      <div>
+        <p class="eyebrow">Route map</p>
+        <h2 id="route-strip-title">V1 stays on the root domain.</h2>
+      </div>
+      <ul class="route-list">
+        <li><a href="/sign-in">/sign-in</a></li>
+        <li><a href="/auth/confirm">/auth/confirm</a></li>
+        <li><a href="/auth/reset">/auth/reset</a></li>
+        <li><a href="/imprint">/imprint</a></li>
+        <li><a href="/privacy">/privacy</a></li>
+        <li><a href="/terms">/terms</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Viaan Health. Public website and auth entry for the German closed beta.</p>
+    <nav aria-label="Legal navigation">
+      <a href="/imprint">Imprint</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+    </nav>
+  </footer>
+</body>
+</html>

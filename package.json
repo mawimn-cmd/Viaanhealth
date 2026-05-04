@@ -1,0 +1,13 @@
+{
+  "name": "viaan-health-public-entry",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Static marketing and auth route shells for Viaan Health F131.",
+  "scripts": {
+    "test": "node --test tests/routes-smoke.test.mjs",
+    "smoke": "node --test tests/routes-smoke.test.mjs"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  }
+}

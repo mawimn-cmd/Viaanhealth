@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign in | Viaan Health</title>
+  <meta name="description" content="Sign in shell for invited Viaan Health beta members.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/site.js" defer></script>
+  <script src="/sign-in.js" defer></script>
+</head>
+<body>
+  <!-- F131 root-domain decision: v1 public/auth routes use https://viaanhealth.com; app.viaanhealth.com is deferred. -->
+  <header class="site-header" data-route="/sign-in">
+    <a class="brand" href="/" aria-label="Viaan Health home">
+      <span class="brand-mark">V</span>
+      <span>Viaan Health</span>
+    </a>
+    <nav class="top-nav" aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/auth/reset">Reset password</a>
+      <a href="/privacy">Privacy</a>
+    </nav>
+  </header>
+
+  <main class="shell-page">
+    <section class="auth-card" aria-labelledby="sign-in-title">
+      <p class="eyebrow">Member entry</p>
+      <h1 id="sign-in-title">Sign in</h1>
+      <div class="auth-copy">
+        <p lang="en">For invited beta members only. Use the email and password linked to your Viaan account.</p>
+        <p lang="de">Nur f&uuml;r eingeladene Beta-Mitglieder. Nutze die E-Mail und das Passwort deines Viaan Kontos.</p>
+      </div>
+
+      <form class="form-stack" data-sign-in-form novalidate>
+        <div class="field">
+          <label for="email">Email / E-Mail</label>
+          <input id="email" name="email" type="email" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label for="password">Password / Passwort</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required>
+        </div>
+        <div class="status-message" data-status-message role="alert" aria-live="polite"></div>
+        <button class="button" type="submit" data-submit-button>Sign in</button>
+      </form>
+
+      <div hidden data-template="invalid-credentials">
+        <span lang="en">We could not sign you in with those credentials.</span>
+        <span lang="de">Wir konnten dich mit diesen Zugangsdaten nicht anmelden.</span>
+      </div>
+      <div hidden data-template="email-not-confirmed">
+        <span lang="en">Your email is not verified yet. Check your inbox or contact support.</span>
+        <span lang="de">Deine E-Mail ist noch nicht best&auml;tigt. Pr&uuml;fe dein Postfach oder kontaktiere den Support.</span>
+      </div>
+      <div hidden data-template="auth-not-enabled">
+        <span lang="en">Sign-in is not enabled in this preview. Connect the verified Viaan Supabase Auth project before production cutover.</span>
+        <span lang="de">Die Anmeldung ist in dieser Vorschau noch nicht aktiviert. Verbinde das verifizierte Viaan Supabase Auth Projekt vor dem Produktivbetrieb.</span>
+      </div>
+
+      <p class="quiet-note" lang="en">Preview shell only: this page does not contact Supabase until the production auth project is confirmed.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Viaan Health.</p>
+    <nav aria-label="Legal navigation">
+      <a href="/imprint">Imprint</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+    </nav>
+  </footer>
+</body>
+</html>
