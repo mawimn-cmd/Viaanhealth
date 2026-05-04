@@ -8,6 +8,7 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css">
   <script src="/site.js" defer></script>
+  <script src="/auth-config.js" defer></script>
   <script src="/sign-in.js" defer></script>
 </head>
 <body>
@@ -54,12 +55,12 @@
         <span lang="en">Your email is not verified yet. Check your inbox or contact support.</span>
         <span lang="de">Deine E-Mail ist noch nicht best&auml;tigt. Pr&uuml;fe dein Postfach oder kontaktiere den Support.</span>
       </div>
-      <div hidden data-template="auth-not-enabled">
-        <span lang="en">Sign-in is not enabled in this preview. Connect the verified Viaan Supabase Auth project before production cutover.</span>
-        <span lang="de">Die Anmeldung ist in dieser Vorschau noch nicht aktiviert. Verbinde das verifizierte Viaan Supabase Auth Projekt vor dem Produktivbetrieb.</span>
+      <div hidden data-template="sign-in-success">
+        <span lang="en">Sign-in succeeded. You can return to the Viaan app.</span>
+        <span lang="de">Die Anmeldung war erfolgreich. Du kannst zur Viaan App zur&uuml;ckkehren.</span>
       </div>
 
-      <p class="quiet-note" lang="en">Preview shell only: this page does not contact Supabase until the production auth project is confirmed.</p>
+      <p class="quiet-note" lang="en">This page uses the verified Viaan Supabase Auth project and does not collect health data.</p>
     </section>
   </main>
 

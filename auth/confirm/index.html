@@ -8,9 +8,11 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css">
   <script src="/site.js" defer></script>
+  <script src="/auth-config.js" defer></script>
+  <script src="/auth-confirm.js" defer></script>
 </head>
 <body>
-  <!-- Preview shell only. Do not route production verification traffic here until Supabase Auth handling is wired. -->
+  <!-- F131 consumes Supabase implicit confirmation redirect hashes and removes tokens from the URL. -->
   <!-- F131 root-domain decision: v1 public/auth routes use https://viaanhealth.com; app.viaanhealth.com is deferred. -->
   <header class="site-header" data-route="/auth/confirm">
     <a class="brand" href="/" aria-label="Viaan Health home">
@@ -27,12 +29,46 @@
   <main class="shell-page">
     <section class="auth-card" aria-labelledby="confirm-title">
       <p class="eyebrow">Email confirmation</p>
-      <h1 id="confirm-title">Email verification pending</h1>
-      <div class="auth-copy">
-        <p lang="en">This preview page does not process verification links yet. Do not send production signup traffic here until the verified Viaan Supabase Auth project is connected.</p>
-        <p lang="de">Diese Vorschauseite verarbeitet noch keine Best&auml;tigungslinks. Leite keine produktiven Registrierungen hierher, bevor das verifizierte Viaan Supabase Auth Projekt verbunden ist.</p>
+      <h1 id="confirm-title" data-confirm-title>Confirming your email...</h1>
+      <div class="auth-copy" data-confirm-copy>
+        <p lang="en">Confirming your email...</p>
+        <p lang="de">Deine E-Mail wird best&auml;tigt...</p>
       </div>
-      <p class="quiet-note" lang="en">F131 remains incomplete for production cutover until this route consumes the Supabase verification result and shows real success or error states.</p>
+      <div class="status-message" data-status-message role="alert" aria-live="polite"></div>
+
+      <div hidden data-template="confirm-success-copy">
+        <p lang="en">Your email address has been verified.</p>
+        <p lang="de">Deine E-Mail-Adresse wurde best&auml;tigt.</p>
+      </div>
+      <div hidden data-template="confirm-success">
+        <span lang="en">You can return to the Viaan app.</span>
+        <span lang="de">Du kannst zur Viaan App zur&uuml;ckkehren.</span>
+      </div>
+      <div hidden data-template="confirm-error-copy">
+        <p lang="en">This confirmation link is invalid or expired.</p>
+        <p lang="de">Dieser Best&auml;tigungslink ist ung&uuml;ltig oder abgelaufen.</p>
+      </div>
+      <div hidden data-template="confirm-error">
+        <span lang="en">Please contact support if you need a new verification email.</span>
+        <span lang="de">Kontaktiere den Support, wenn du eine neue Best&auml;tigungs-E-Mail ben&ouml;tigst.</span>
+      </div>
+      <div hidden data-template="confirm-incomplete-copy">
+        <p lang="en">This verification link opened without a usable session.</p>
+        <p lang="de">Dieser Best&auml;tigungslink wurde ohne nutzbare Sitzung ge&ouml;ffnet.</p>
+      </div>
+      <div hidden data-template="confirm-incomplete">
+        <span lang="en">Open the latest verification email in the same browser, or contact support.</span>
+        <span lang="de">&Ouml;ffne die neueste Best&auml;tigungs-E-Mail im selben Browser oder kontaktiere den Support.</span>
+      </div>
+      <div hidden data-template="confirm-missing-copy">
+        <p lang="en">No confirmation token was found in this link.</p>
+        <p lang="de">In diesem Link wurde kein Best&auml;tigungstoken gefunden.</p>
+      </div>
+      <div hidden data-template="confirm-missing">
+        <span lang="en">Use the link from your Viaan verification email.</span>
+        <span lang="de">Nutze den Link aus deiner Viaan Best&auml;tigungs-E-Mail.</span>
+      </div>
+      <p class="quiet-note" lang="en">This page uses the verified Viaan Supabase Auth project and removes confirmation tokens from the address bar after processing.</p>
     </section>
   </main>
 

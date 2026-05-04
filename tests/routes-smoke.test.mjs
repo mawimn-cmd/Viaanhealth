@@ -16,7 +16,9 @@ const productionFiles = [
   ...Object.values(routes),
   "styles.css",
   "site.js",
+  "auth-config.js",
   "sign-in.js",
+  "auth-confirm.js",
   "favicon.svg",
   "vercel.json",
 ];
@@ -35,8 +37,9 @@ const forbiddenCopy = [
   /clarity/i,
   /hotjar/i,
   /session replay/i,
-  /https:\/\/[a-z0-9]{20}\.supabase\.co/i,
   /gdnkbogudoooayjxedyt/i,
+  /service[_-]?role/i,
+  /sb_secret_/i,
   /eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/,
 ];
 
@@ -55,28 +58,37 @@ test("F131 routes exist and declare their route ownership", async () => {
 test("sign-in shell includes required states and bilingual email-not-confirmed copy", async () => {
   const html = await read(routes["/sign-in"]);
   const script = await read("sign-in.js");
+  const authConfig = await read("auth-config.js");
 
   assert.match(html, /type="email"/);
   assert.match(html, /type="password"/);
   assert.match(html, /Your email is not verified yet\. Check your inbox or contact support\./);
   assert.match(html, /Deine E-Mail ist noch nicht best&auml;tigt\. Pr&uuml;fe dein Postfach oder kontaktiere den Support\./);
-  assert.match(html, /Sign-in is not enabled in this preview/);
+  assert.match(html, /Sign-in succeeded\. You can return to the Viaan app\./);
   assert.match(script, /Signing in\.\.\./);
   assert.match(script, /invalid-credentials/);
-  assert.match(script, /auth-not-enabled/);
-  assert.doesNotMatch(script, /fetch\(/);
-  assert.doesNotMatch(script, /supabase/i);
+  assert.match(script, /email-not-confirmed/);
+  assert.match(script, /fetch\(/);
+  assert.match(script, /grant_type=password/);
+  assert.match(authConfig, /https:\/\/psqvyxgkbupdbxvdpbll\.supabase\.co/);
+  assert.match(authConfig, /sb_publishable_T6C-MkpZc1m8Ymp6gNXcyA_fc56iJ3m/);
   assert.doesNotMatch(html, /resend/i);
 });
 
-test("auth callback shells do not masquerade as functional production handlers", async () => {
+test("auth callback shell processes Supabase confirmation hashes", async () => {
   const confirm = await read(routes["/auth/confirm"]);
+  const confirmScript = await read("auth-confirm.js");
   const reset = await read(routes["/auth/reset"]);
 
-  assert.match(confirm, /Email verification pending/);
-  assert.match(confirm, /does not process verification links yet/);
-  assert.match(confirm, /F131 remains incomplete for production cutover/);
-  assert.doesNotMatch(confirm, /Confirming your email\.\.\./);
+  assert.match(confirm, /Confirming your email\.\.\./);
+  assert.match(confirm, /Deine E-Mail wird best&auml;tigt\.\.\./);
+  assert.match(confirm, /removes confirmation tokens from the address bar/);
+  assert.match(confirmScript, /access_token/);
+  assert.match(confirmScript, /history\.replaceState/);
+  assert.match(confirmScript, /Email verified/);
+  assert.match(confirmScript, /Email verification failed/);
+  assert.match(confirmScript, /\/user/);
+  assert.doesNotMatch(confirm, /does not process verification links yet/);
 
   assert.match(reset, /Password reset/);
   assert.match(reset, /Passwort zur&uuml;cksetzen/);
