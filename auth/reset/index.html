@@ -8,9 +8,11 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css">
   <script src="/site.js" defer></script>
+  <script src="/auth-config.js" defer></script>
+  <script src="/auth-reset.js" defer></script>
 </head>
 <body>
-  <!-- F003 owns recovery token handling, password validation, and supabase.auth.updateUser({ password }). -->
+  <!-- F003 consumes Supabase recovery hashes, removes token material from the URL, and updates the password on web only. -->
   <!-- F131 root-domain decision: v1 public/auth routes use https://viaanhealth.com; app.viaanhealth.com is deferred. -->
   <header class="site-header" data-route="/auth/reset">
     <a class="brand" href="/" aria-label="Viaan Health home">
@@ -27,12 +29,59 @@
   <main class="shell-page">
     <section class="auth-card" aria-labelledby="reset-title">
       <p class="eyebrow">Account recovery</p>
-      <h1 id="reset-title">Password reset</h1>
-      <div class="auth-copy">
-        <p lang="en">Password reset</p>
-        <p lang="de">Passwort zur&uuml;cksetzen</p>
+      <h1 id="reset-title" data-reset-title>Password reset</h1>
+      <div class="auth-copy" data-reset-copy>
+        <p lang="en">Choose a new password for your Viaan account.</p>
+        <p lang="de">Lege ein neues Passwort f&uuml;r dein Viaan Konto fest.</p>
       </div>
-      <p class="quiet-note" lang="en">The recovery token flow and secure password form will be connected by the password reset feature.</p>
+      <form class="form-stack" data-reset-form novalidate hidden>
+        <div class="field">
+          <label for="password">New password / Neues Passwort</label>
+          <input id="password" name="password" type="password" autocomplete="new-password" required minlength="8">
+        </div>
+        <div class="field">
+          <label for="confirm-password">Confirm password / Passwort best&auml;tigen</label>
+          <input id="confirm-password" name="confirmPassword" type="password" autocomplete="new-password" required minlength="8">
+        </div>
+        <div class="status-message" data-status-message role="alert" aria-live="polite"></div>
+        <button class="button" type="submit" data-submit-button>Update password</button>
+      </form>
+      <div class="status-message" data-page-status role="alert" aria-live="polite"></div>
+
+      <div hidden data-template="reset-ready-copy">
+        <p lang="en">Choose a new password for your Viaan account.</p>
+        <p lang="de">Lege ein neues Passwort f&uuml;r dein Viaan Konto fest.</p>
+      </div>
+      <div hidden data-template="reset-success-copy">
+        <p lang="en">Your password has been updated.</p>
+        <p lang="de">Dein Passwort wurde aktualisiert.</p>
+      </div>
+      <div hidden data-template="reset-success">
+        <span lang="en">Open the Viaan app and sign in with your new password.</span>
+        <span lang="de">&Ouml;ffne die Viaan App und melde dich mit deinem neuen Passwort an.</span>
+        <a class="button button-small status-action" href="viaan://sign-in">Open Viaan app</a>
+      </div>
+      <div hidden data-template="reset-invalid-copy">
+        <p lang="en">This reset link is invalid or has expired. Please request a new password reset link.</p>
+        <p lang="de">Dieser Link ist ung&uuml;ltig oder abgelaufen. Bitte fordere einen neuen Link zum Zur&uuml;cksetzen des Passworts an.</p>
+      </div>
+      <div hidden data-template="reset-invalid">
+        <span lang="en">Return to sign in to request a new reset email.</span>
+        <span lang="de">Kehre zur Anmeldung zur&uuml;ck, um eine neue E-Mail anzufordern.</span>
+      </div>
+      <div hidden data-template="reset-password-too-short">
+        <span lang="en">Password must be at least 8 characters.</span>
+        <span lang="de">Das Passwort muss mindestens 8 Zeichen lang sein.</span>
+      </div>
+      <div hidden data-template="reset-password-mismatch">
+        <span lang="en">Passwords do not match.</span>
+        <span lang="de">Die Passw&ouml;rter stimmen nicht &uuml;berein.</span>
+      </div>
+      <div hidden data-template="reset-unavailable">
+        <span lang="en">Password reset is temporarily unavailable. Please try again later.</span>
+        <span lang="de">Das Zur&uuml;cksetzen des Passworts ist vor&uuml;bergehend nicht verf&uuml;gbar. Bitte versuche es sp&auml;ter erneut.</span>
+      </div>
+      <p class="quiet-note" lang="en">This page removes password reset tokens from the address bar after processing.</p>
     </section>
   </main>
 

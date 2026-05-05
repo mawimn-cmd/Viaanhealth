@@ -22,6 +22,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 html {
   background: var(--bg);
 }
@@ -389,6 +393,22 @@ h1 {
   gap: 16px;
 }
 
+.auth-divider {
+  height: 1px;
+  background: var(--line);
+  margin: 24px 0;
+}
+
+.reset-request h2 {
+  margin: 0 0 12px;
+  color: var(--ink);
+  font-size: 1.1rem;
+}
+
+.compact-copy {
+  margin-bottom: 18px;
+}
+
 .field {
   display: grid;
   gap: 7px;
@@ -427,6 +447,11 @@ h1 {
 .status-message.show {
   display: grid;
   gap: 4px;
+}
+
+.status-action {
+  justify-self: start;
+  margin-top: 8px;
 }
 
 .status-message.error {
