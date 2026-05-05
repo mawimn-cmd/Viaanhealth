@@ -1,6 +1,9 @@
 const form = document.querySelector("[data-sign-in-form]");
 const statusMessage = document.querySelector("[data-status-message]");
 const submitButton = document.querySelector("[data-submit-button]");
+const passwordResetForm = document.querySelector("[data-password-reset-form]");
+const passwordResetStatus = document.querySelector("[data-password-reset-status]");
+const passwordResetButton = document.querySelector("[data-password-reset-button]");
 const supabaseConfig = window.viaanSupabaseConfig;
 
 function readTemplate(name) {
@@ -18,14 +21,34 @@ function clearStatus() {
   statusMessage.textContent = "";
 }
 
+function setResetStatus(type, html) {
+  passwordResetStatus.className = `status-message show ${type}`;
+  passwordResetStatus.innerHTML = html;
+}
+
+function clearResetStatus() {
+  passwordResetStatus.className = "status-message";
+  passwordResetStatus.textContent = "";
+}
+
 function setSubmitting(isSubmitting) {
   submitButton.disabled = isSubmitting;
   submitButton.setAttribute("aria-busy", String(isSubmitting));
   submitButton.textContent = isSubmitting ? "Signing in..." : "Sign in";
 }
 
+function setResetSubmitting(isSubmitting) {
+  passwordResetButton.disabled = isSubmitting;
+  passwordResetButton.setAttribute("aria-busy", String(isSubmitting));
+  passwordResetButton.textContent = isSubmitting ? "Sending..." : "Send reset link";
+}
+
 function hasValidShape(email, password) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && password.length > 0;
+}
+
+function hasValidEmailShape(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 function normalizeError(message) {
@@ -70,6 +93,32 @@ async function signInWithPassword(email, password) {
   return payload;
 }
 
+async function requestPasswordReset(email) {
+  if (!supabaseConfig) {
+    throw new Error("auth-unavailable");
+  }
+
+  const response = await fetch(`${supabaseConfig.url}/functions/v1/member-password-reset`, {
+    body: JSON.stringify({
+      email,
+    }),
+    headers: {
+      apikey: supabaseConfig.publishableKey,
+      Authorization: `Bearer ${supabaseConfig.publishableKey}`,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+  });
+
+  const payload = await response.json().catch(() => ({}));
+
+  if (!response.ok || payload.ok !== true) {
+    throw new Error("reset-unavailable");
+  }
+
+  return payload;
+}
+
 if (form) {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -97,6 +146,32 @@ if (form) {
       setStatus("error", readTemplate(templateName));
     } finally {
       setSubmitting(false);
+    }
+  });
+}
+
+if (passwordResetForm) {
+  passwordResetForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    clearResetStatus();
+
+    const formData = new FormData(passwordResetForm);
+    const email = String(formData.get("email") || "").trim();
+
+    if (!hasValidEmailShape(email)) {
+      setResetStatus("error", readTemplate("reset-request-invalid-email"));
+      return;
+    }
+
+    setResetSubmitting(true);
+
+    try {
+      await requestPasswordReset(email);
+      setResetStatus("success", readTemplate("reset-request-success"));
+    } catch {
+      setResetStatus("error", readTemplate("reset-request-unavailable"));
+    } finally {
+      setResetSubmitting(false);
     }
   });
 }

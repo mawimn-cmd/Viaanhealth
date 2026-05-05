@@ -20,7 +20,7 @@
     </a>
     <nav class="top-nav" aria-label="Main navigation">
       <a href="/">Home</a>
-      <a href="/auth/reset">Reset password</a>
+      <a href="#forgot-password">Forgot password</a>
       <a href="/privacy">Privacy</a>
     </nav>
   </header>
@@ -47,6 +47,24 @@
         <button class="button" type="submit" data-submit-button>Sign in</button>
       </form>
 
+      <div class="auth-divider" aria-hidden="true"></div>
+
+      <section class="reset-request" id="forgot-password" aria-labelledby="forgot-password-title">
+        <h2 id="forgot-password-title">Forgot password?</h2>
+        <div class="auth-copy compact-copy">
+          <p lang="en">Enter your account email address. We will send instructions to reset your password.</p>
+          <p lang="de">Gib die E-Mail-Adresse deines Kontos ein. Wir senden dir Anweisungen zum Zur&uuml;cksetzen deines Passworts.</p>
+        </div>
+        <form class="form-stack" data-password-reset-form novalidate>
+          <div class="field">
+            <label for="reset-email">Email / E-Mail</label>
+            <input id="reset-email" name="email" type="email" autocomplete="username" required>
+          </div>
+          <div class="status-message" data-password-reset-status role="alert" aria-live="polite"></div>
+          <button class="button button-secondary" type="submit" data-password-reset-button>Send reset link</button>
+        </form>
+      </section>
+
       <div hidden data-template="invalid-credentials">
         <span lang="en">We could not sign you in with those credentials.</span>
         <span lang="de">Wir konnten dich mit diesen Zugangsdaten nicht anmelden.</span>
@@ -58,6 +76,18 @@
       <div hidden data-template="sign-in-success">
         <span lang="en">Sign-in succeeded. You can return to the Viaan app.</span>
         <span lang="de">Die Anmeldung war erfolgreich. Du kannst zur Viaan App zur&uuml;ckkehren.</span>
+      </div>
+      <div hidden data-template="reset-request-success">
+        <span lang="en">If an account exists for that email, we sent password reset instructions.</span>
+        <span lang="de">Falls ein Konto mit dieser E-Mail-Adresse existiert, haben wir Anweisungen zum Zur&uuml;cksetzen des Passworts gesendet.</span>
+      </div>
+      <div hidden data-template="reset-request-invalid-email">
+        <span lang="en">Enter a valid email address.</span>
+        <span lang="de">Gib eine g&uuml;ltige E-Mail-Adresse ein.</span>
+      </div>
+      <div hidden data-template="reset-request-unavailable">
+        <span lang="en">Password reset is temporarily unavailable. Please try again later.</span>
+        <span lang="de">Das Zur&uuml;cksetzen des Passworts ist vor&uuml;bergehend nicht verf&uuml;gbar. Bitte versuche es sp&auml;ter erneut.</span>
       </div>
 
       <p class="quiet-note" lang="en">This page uses the verified Viaan Supabase Auth project and does not collect health data.</p>

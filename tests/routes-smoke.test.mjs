@@ -19,6 +19,7 @@ const productionFiles = [
   "auth-config.js",
   "sign-in.js",
   "auth-confirm.js",
+  "auth-reset.js",
   "favicon.svg",
   "vercel.json",
 ];
@@ -70,15 +71,20 @@ test("sign-in shell includes required states and bilingual email-not-confirmed c
   assert.match(script, /email-not-confirmed/);
   assert.match(script, /fetch\(/);
   assert.match(script, /grant_type=password/);
+  assert.match(script, /member-password-reset/);
   assert.match(authConfig, /https:\/\/psqvyxgkbupdbxvdpbll\.supabase\.co/);
   assert.match(authConfig, /sb_publishable_T6C-MkpZc1m8Ymp6gNXcyA_fc56iJ3m/);
+  assert.match(html, /Forgot password\?/);
+  assert.match(html, /If an account exists for that email, we sent password reset instructions\./);
+  assert.match(html, /Falls ein Konto mit dieser E-Mail-Adresse existiert, haben wir Anweisungen zum Zur&uuml;cksetzen des Passworts gesendet\./);
   assert.doesNotMatch(html, /resend/i);
 });
 
-test("auth callback shell processes Supabase confirmation hashes", async () => {
+test("auth callback shells process Supabase confirmation and recovery hashes", async () => {
   const confirm = await read(routes["/auth/confirm"]);
   const confirmScript = await read("auth-confirm.js");
   const reset = await read(routes["/auth/reset"]);
+  const resetScript = await read("auth-reset.js");
 
   assert.match(confirm, /Confirming your email\.\.\./);
   assert.match(confirm, /Deine E-Mail wird best&auml;tigt\.\.\./);
@@ -90,9 +96,17 @@ test("auth callback shell processes Supabase confirmation hashes", async () => {
   assert.match(confirmScript, /\/user/);
   assert.doesNotMatch(confirm, /does not process verification links yet/);
 
-  assert.match(reset, /Password reset/);
-  assert.match(reset, /Passwort zur&uuml;cksetzen/);
-  assert.match(reset, /F003 owns recovery token handling/);
+  assert.match(reset, /New password/);
+  assert.match(reset, /Neues Passwort/);
+  assert.match(reset, /viaan:\/\/sign-in/);
+  assert.match(reset, /removes password reset tokens from the address bar/);
+  assert.match(resetScript, /access_token/);
+  assert.match(resetScript, /recoveryType !== "recovery"/);
+  assert.match(resetScript, /history\.replaceState/);
+  assert.match(resetScript, /\/user/);
+  assert.match(resetScript, /password/);
+  assert.match(resetScript, /logout\?scope=global/);
+  assert.match(resetScript, /Password updated/);
 });
 
 test("legal pages visibly gate production cutover on F120/F121", async () => {
