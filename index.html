@@ -11,6 +11,8 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css">
   <script src="/site.js" defer></script>
+  <script src="/auth-config.js" defer></script>
+  <script src="/waitlist-signup.js" defer></script>
 </head>
 <body>
   <!-- F131 root-domain decision: v1 public/auth routes use https://viaanhealth.com; app.viaanhealth.com is deferred. -->
@@ -38,6 +40,50 @@
         <a class="button" href="/sign-in">Member sign in</a>
         <a class="button button-secondary" href="mailto:hello@viaanhealth.com">Contact</a>
       </div>
+
+      <section class="waitlist-section" aria-labelledby="waitlist-title">
+        <h2 id="waitlist-title" class="waitlist-title">
+          <span lang="en">Join the closed-beta waitlist</span>
+          <span lang="de"> &middot; Auf die Warteliste setzen</span>
+        </h2>
+        <div class="auth-copy compact-copy">
+          <p lang="en">Drop your email and we&rsquo;ll let you know when Viaan opens to new members.</p>
+          <p lang="de">Hinterlasse deine E-Mail und wir informieren dich, sobald Viaan f&uuml;r neue Mitglieder &ouml;ffnet.</p>
+        </div>
+
+        <form class="form-stack" data-waitlist-form novalidate>
+          <div class="field">
+            <label for="waitlist-email">Email / E-Mail</label>
+            <input id="waitlist-email" name="email" type="email" autocomplete="email" required>
+          </div>
+
+          <div class="waitlist-consent">
+            <p lang="en">We&rsquo;ll only use this email to notify you when Viaan opens to new members. See our <a href="/privacy">privacy policy</a>.</p>
+            <p lang="de">Wir verwenden diese E-Mail-Adresse ausschlie&szlig;lich, um dich zu informieren, sobald Viaan f&uuml;r neue Mitglieder verf&uuml;gbar ist. Siehe unsere <a href="/privacy">Datenschutzerkl&auml;rung</a>.</p>
+          </div>
+
+          <div class="status-message" data-waitlist-status role="alert" aria-live="polite"></div>
+
+          <button class="button" type="submit" data-waitlist-submit>
+            <span lang="en">Join the waitlist</span>
+            <span lang="de"> &middot; Eintragen</span>
+          </button>
+        </form>
+
+        <div hidden data-template="waitlist-invalid-email">
+          <span lang="en">Please enter a valid email address.</span>
+          <span lang="de">Bitte gib eine g&uuml;ltige E-Mail-Adresse ein.</span>
+        </div>
+        <div hidden data-template="waitlist-failure">
+          <span lang="en">Couldn&rsquo;t add you to the list right now. Please try again in a moment.</span>
+          <span lang="de">Wir konnten dich gerade nicht zur Liste hinzuf&uuml;gen. Bitte versuche es in einem Moment erneut.</span>
+        </div>
+        <div hidden data-template="waitlist-success">
+          <span lang="en">You&rsquo;re on the list! We&rsquo;ll let you know when you have access.</span>
+          <span lang="de">Du stehst auf der Liste! Wir informieren dich, sobald der Zugang verf&uuml;gbar ist.</span>
+        </div>
+      </section>
+
       <p class="quiet-note" lang="en">This public page does not collect health data.</p>
     </section>
   </main>

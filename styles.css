@@ -566,3 +566,44 @@ h1 {
     padding: 24px;
   }
 }
+
+.waitlist-section {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.waitlist-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--ink);
+}
+
+.waitlist-consent {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.waitlist-consent p {
+  margin: 0 0 4px;
+}
+
+.waitlist-consent p:last-child {
+  margin-bottom: 0;
+}
+
+.waitlist-consent a {
+  color: var(--green-2);
+  text-decoration: underline;
+}
+
+.waitlist-processing-card {
+  margin-top: 24px;
+}
+
