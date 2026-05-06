@@ -512,3 +512,36 @@ test("waitlist submit: in-flight disable visible while fetch is pending, re-enab
   assert.equal(dom.submitButton.disabled, false);
   assert.equal(dom.submitButton.getAttribute("aria-disabled"), "false");
 });
+
+test("waitlist submit: second submit while first is in-flight is dropped, fetch called once", async () => {
+  const fetchCalls = [];
+  let resolveFetch;
+  const fetch = (url, options) => {
+    fetchCalls.push({ url, options });
+    return new Promise((resolve) => {
+      resolveFetch = () => resolve({ status: 200, async json() { return { ok: true }; } });
+    });
+  };
+
+  const dom = await runWaitlistInVm({
+    formData: { email: "user@example.test" },
+    supabaseConfig: SUPABASE,
+    fetch,
+  });
+
+  const first = dom.dispatchSubmit();
+  // Yield so the handler reaches the await on fetch and isSubmitting=true takes effect.
+  await new Promise((r) => setImmediate(r));
+  assert.equal(fetchCalls.length, 1);
+
+  // A second submit fires while the first is still pending — should be dropped without calling fetch.
+  const second = dom.dispatchSubmit();
+  await new Promise((r) => setImmediate(r));
+  assert.equal(fetchCalls.length, 1, "second submit must not issue a second fetch");
+
+  resolveFetch();
+  await Promise.all([first, second]);
+
+  assert.equal(fetchCalls.length, 1);
+  assert.equal(dom.form.removed, true);
+});

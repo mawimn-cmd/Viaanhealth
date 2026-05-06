@@ -90,9 +90,16 @@ function replaceFormWithSuccess() {
   form.remove();
 }
 
+let isSubmitting = false;
+
 if (form) {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
+
+    if (isSubmitting) {
+      return;
+    }
+
     clearStatus();
 
     const formData = new FormData(form);
@@ -103,6 +110,7 @@ if (form) {
       return;
     }
 
+    isSubmitting = true;
     setSubmitting(true);
 
     try {
@@ -112,6 +120,7 @@ if (form) {
       setStatus("error", readTemplate("waitlist-failure"));
     } finally {
       setSubmitting(false);
+      isSubmitting = false;
     }
   });
 }
