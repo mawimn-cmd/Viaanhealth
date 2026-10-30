@@ -100,14 +100,14 @@ test("auth callback shells process Supabase confirmation and recovery hashes", a
 
   assert.match(reset, /New password/);
   assert.match(reset, /Neues Passwort/);
-  assert.match(reset, /viaan:\/\/sign-in/);
-  assert.match(reset, /removes password reset tokens from the address bar/);
+  assert.match(reset, /viaan:\/\/\//);
+  assert.match(reset, /removes password tokens from the address bar before using the link/);
   assert.match(resetScript, /access_token/);
   assert.match(resetScript, /recoveryType !== "recovery"/);
   assert.match(resetScript, /history\.replaceState/);
   assert.match(resetScript, /\/user/);
   assert.match(resetScript, /password/);
-  assert.match(resetScript, /logout\?scope=global/);
+  assert.match(resetScript, /logout\?scope=local/);
   assert.match(resetScript, /Password updated/);
 });
 
