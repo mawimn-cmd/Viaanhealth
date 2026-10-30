@@ -40,3 +40,10 @@ Real-user production traffic is blocked until:
 pnpm test
 ```
 
+
+
+## Owner-first password setup implementation (approved 2026-10-30)
+
+The human approved extending the existing password page for Supabase-issued TokenHash fragments, explicit verification and memory-only session reuse for password retries, while retaining existing recovery access-token links. DE-primary neutral initial/reset copy, fixed provider destinations, scope-local cleanup and safe localized errors are in scope. No DOB/consent/PHI input, new auth provider or member signup entry is added on this public surface.
+
+The coordinated product-repo PR owns signup, membership and legal completion. Production remains paused. The compatible website must be deployed before a shared recovery-template switch, with both old/new link formats proved and preserved during rollback. Implementation approval is not permission to change a hosted template, credentials, quota, paid plan or production deployment.
