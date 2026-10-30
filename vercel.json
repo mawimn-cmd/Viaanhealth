@@ -1,5 +1,4 @@
 {
-  "buildCommand": "npm test",
   "cleanUrls": true,
   "headers": [
     {
